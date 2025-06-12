@@ -6,57 +6,17 @@ public class Main {
     }
     static String addBinary(String a, String b) {
         StringBuilder result = new StringBuilder();
-        int i = a.length()-1;
-        int j = b.length()-1;
+        int i = a.length() - 1;
+        int j = b.length() - 1;
         int carry = 0;
+        while (i >= 0 || j >= 0 || carry != 0) {
+            int bitA = (i >= 0) ? a.charAt(i--) - '0' : 0;
+            int bitB = (j >= 0) ? b.charAt(j--) - '0' : 0;
 
-        while (i >= 0 && j >= 0) {
-            int add = a.charAt(i) + b.charAt(j) - 2 * '0' + carry;
-            if (add == 2) {
-                result.append(0);
-                carry = 1;
-            } else if (add == 3) {
-                result.append(1);
-                carry = 1;
-            } else if (add <= 1) {
-                result.append(add);
-                carry = 0;
-            }
-            i--;
-            j--;
+            int sum = bitA + bitB + carry;
+            result.append(sum % 2);
+            carry = sum / 2;
         }
-
-        while (i >= 0) {
-            int add = a.charAt(i) - '0' + carry;
-            if (add == 2) {
-                result.append(0);
-                carry = 1;
-            } else if (add == 3) {
-                result.append(1);
-                carry = 1;
-            } else if (add <= 1) {
-                result.append(add);
-                carry = 0;
-            }
-            i--;
-        }
-
-        while (j >= 0) {
-            int add = b.charAt(j) - '0' + carry;
-            if (add == 2) {
-                result.append(0);
-                carry = 1;
-            } else if (add == 3) {
-                result.append(1);
-                carry = 1;
-            } else if (add <= 1) {
-                result.append(add);
-                carry = 0;
-            }
-            j--;
-        }
-
-        if (carry > 0) result.append(carry);
         return result.reverse().toString();
     }
 }
